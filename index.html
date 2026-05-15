@@ -991,42 +991,91 @@ Puedes incluir:
     }
 
     /* ── PQR: ENVIAR ── */
-   async function enviarPQR() {
+ async function enviarPQR() {
+
+    const btn = document.getElementById('btnEnviarPQR');
 
     const tipo        = document.getElementById('pqrTipo').value;
     const area        = document.getElementById('pqrArea').value;
     const asunto      = document.getElementById('pqrAsunto').value.trim();
     const descripcion = document.getElementById('pqrDescripcion').value.trim();
+    const fecha       = document.getElementById('pqrFecha').value;
+    const anonimo     = document.getElementById('pqrAnonimo').checked;
+
+    const nombre = anonimo
+        ? 'ANÓNIMO'
+        : document.getElementById('pqrNombre').value.trim();
+
+    const correo = anonimo
+        ? 'NO REGISTRADO'
+        : document.getElementById('pqrCorreo').value.trim();
+
+    if (!tipo || !area || !asunto || !descripcion) {
+        alert('Completa los campos obligatorios.');
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '⏳ ENVIANDO...';
 
     const payload = {
+        numeroCaso : numeroCasoActual,
         tipo,
         area,
         asunto,
-        descripcion
+        descripcion,
+        fecha,
+        anonimo,
+        nombre,
+        correo
     };
 
     try {
 
-        await fetch(
+        const response = await fetch(
             'https://script.google.com/macros/s/AKfycbyldkbRGtV-fasNnE7CdBBQGm604v0W0yYJUtiedVt0-3k36XQhiO6Nnb9MfvZwyFfy/exec',
             {
                 method: 'POST',
-                body: JSON.stringify(payload),
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'text/plain;charset=utf-8'
+                },
+                body: JSON.stringify(payload)
             }
         );
 
-        alert('PQR enviado correctamente');
+        const text = await response.text();
 
-    } catch(error){
+        console.log(text);
+
+        const data = JSON.parse(text);
+
+        if (data.success) {
+
+            document.getElementById('pqrFormContainer').style.display = 'none';
+
+            document
+                .getElementById('pqrExito')
+                .classList.add('mostrar');
+
+            document.getElementById('pqrCasoConfirmado').textContent =
+                numeroCasoActual;
+
+        } else {
+
+            alert('Error: ' + data.error);
+
+        }
+
+    } catch (error) {
 
         console.error(error);
 
         alert('Error enviando PQR');
 
     }
+
+    btn.disabled = false;
+    btn.innerHTML = '📤 ENVIAR REPORTE PQR';
 }
     /* ── PQR: NUEVO REPORTE ── */
     function nuevoPQR() {
