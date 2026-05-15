@@ -997,52 +997,17 @@ Puedes incluir:
     const area        = document.getElementById('pqrArea').value;
     const asunto      = document.getElementById('pqrAsunto').value.trim();
     const descripcion = document.getElementById('pqrDescripcion').value.trim();
-    const fecha       = document.getElementById('pqrFecha').value;
-    const anonimo     = document.getElementById('pqrAnonimo').checked;
-    const nombre      = document.getElementById('pqrNombre').value.trim();
-    const correo      = document.getElementById('pqrCorreo').value.trim();
-
-    if (!tipo || !area || !asunto || !descripcion) {
-        alert('Por favor completa los campos obligatorios.');
-        return;
-    }
-
-    const btn = document.getElementById('btnEnviarPQR');
-
-    btn.disabled = true;
-    btn.textContent = '⏳ Enviando...';
-
-    const ahora = new Date().toLocaleString('es-CO', {
-        timeZone: 'America/Bogota'
-    });
-
-    const remitente = anonimo
-        ? 'ANÓNIMO'
-        : (nombre || 'No especificado');
-
-    const correoRem = anonimo
-        ? 'Anónimo'
-        : (correo || 'No especificado');
-
-    const fechaEvento = fecha
-        ? new Date(fecha + 'T12:00:00').toLocaleDateString('es-CO')
-        : 'No especificada';
 
     const payload = {
-        numeroCaso: numeroCasoActual,
-        fechaHora: ahora,
         tipo,
         area,
         asunto,
-        descripcion,
-        fechaEvento,
-        nombre: remitente,
-        correo: correoRem
+        descripcion
     };
 
     try {
 
-        const response = await fetch(
+        await fetch(
             'https://script.google.com/macros/s/AKfycbyldkbRGtV-fasNnE7CdBBQGm604v0W0yYJUtiedVt0-3k36XQhiO6Nnb9MfvZwyFfy/exec',
             {
                 method: 'POST',
@@ -1053,37 +1018,16 @@ Puedes incluir:
             }
         );
 
-        const data = await response.json();
-
-        if(data.success){
-
-            document.getElementById('pqrFormContainer').style.display = 'none';
-
-            const exitoEl = document.getElementById('pqrExito');
-
-            document.getElementById('pqrCasoConfirmado').textContent = numeroCasoActual;
-
-            exitoEl.classList.add('mostrar');
-
-        } else {
-
-            alert('Error enviando el correo.');
-
-        }
+        alert('PQR enviado correctamente');
 
     } catch(error){
 
         console.error(error);
 
-        alert('Error de conexión con el servidor.');
+        alert('Error enviando PQR');
 
     }
-
-    btn.disabled = false;
-    btn.textContent = '📤 ENVIAR REPORTE PQR';
 }
-    }
-
     /* ── PQR: NUEVO REPORTE ── */
     function nuevoPQR() {
         /* Limpiar formulario */
