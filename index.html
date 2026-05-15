@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Intranet Arkos | 2026</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root{
+            --rojo:#D32F2F;
+            --rojo-hover:#B71C1C;
+            --fondo:#F1F5F9;
+            --texto:#1E293B;
+            --borde:#E2E8F0;
+            --blanco:#FFFFFF;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Inter',sans-serif;
+            background:var(--fondo);
+            color:var(--texto);
+            min-height:100vh;
+        }
+
+        header{
+            width:100%;
+            background:#fff;
+            padding:20px;
+            border-bottom:4px solid var(--rojo);
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            box-shadow:0 2px 10px rgba(0,0,0,.05);
+        }
+
+        .logo-img{
+            width:180px;
+            margin-bottom:10px;
+        }
+
+        .sub-header{
+            font-size:11px;
+            letter-spacing:4px;
+            text-transform:uppercase;
+            color:#94A3B8;
+            font-weight:700;
+        }
+
+        .container{
+            width:100%;
+            padding:25px 2%;
+        }
+
+        .barra-superior{
+            width:100%;
+            background:#fff;
+            border:2px solid var(--rojo);
+            border-radius:14px;
+            padding:15px 0;
+            margin-bottom:25px;
+            overflow:hidden;
+            position:relative;
+            color:var(--rojo);
+            font-weight:700;
+        }
+
+        .marquee{
+            width:100%;
+            overflow:hidden;
+            white-space:nowrap;
+        }
+
+        .marquee span{
+            display:inline-block;
+            padding-left:100%;
+            animation:marquee 18s linear infinite;
+            font-size:1rem;
+            color:var(--rojo);
+            font-weight:700;
+        }
+
+        @keyframes marquee{
+            0%{transform:translateX(0);}
+            100%{transform:translateX(-100%);}
+        }
+
+        .grid-dashboard{
+            display:grid;
+            grid-template-columns:repeat(6,1fr);
+            gap:15px;
+            margin-bottom:30px;
+        }
+
+        .modulo-card{
+            background:#fff;
+            border:1px solid var(--borde);
+            border-radius:18px;
+            padding:25px 15px;
+            text-align:center;
+            transition:.3s ease;
+            cursor:pointer;
+        }
+
+        .modulo-card:hover{
+            transform:translateY(-5px);
+            border-color:var(--rojo);
+            box-shadow:0 10px 20px rgba(211,47,47,.12);
+        }
+
+        /* PQR card destacada */
+        .modulo-card.pqr-card{
+            background:linear-gradient(135deg,#fff5f5,#fff);
+            border:2px solid var(--rojo);
+        }
+
+        .modulo-card.pqr-card:hover{
+            background:linear-gradient(135deg,#ffeaea,#fff5f5);
+            box-shadow:0 10px 25px rgba(211,47,47,.2);
+        }
+
+        .icon-box{
+            font-size:42px;
+            margin-bottom:12px;
+            display:block;
+        }
+
+        .modulo-card h2{
+            font-size:1rem;
+            margin-bottom:12px;
+        }
+
+        .btn-ingresar{
+            display:inline-block;
+            background:var(--rojo);
+            color:#fff;
+            padding:8px 16px;
+            border-radius:8px;
+            font-size:.8rem;
+            font-weight:700;
+        }
+
+        .btn-ingresar:hover{background:var(--rojo-hover);}
+
+        .bienvenida{
+            background:linear-gradient(135deg,#D32F2F,#B71C1C);
+            color:#fff;
+            border-radius:20px;
+            padding:45px;
+            margin-bottom:30px;
+        }
+
+        .bienvenida h1{
+            font-size:2rem;
+            margin-bottom:10px;
+        }
+
+        .bienvenida p{opacity:.95;}
+
+        .accesos-rapidos{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:15px;
+            margin-bottom:30px;
+        }
+
+        .acceso-card{
+            background:#fff;
+            border-radius:16px;
+            padding:25px;
+            text-align:center;
+            border:1px solid var(--borde);
+            transition:.3s ease;
+        }
+
+        .acceso-card:hover{
+            transform:translateY(-5px);
+            box-shadow:0 10px 20px rgba(0,0,0,.06);
+        }
+
+        .acceso-card span{
+            font-size:2rem;
+            display:block;
+            margin-bottom:10px;
+        }
+
+        .acceso-card p{font-weight:700;}
+
+        .seccion-detalle{
+            display:none;
+            background:#fff;
+            border:2px solid var(--rojo);
+            border-radius:18px;
+            padding:35px;
+            animation:fadeIn .4s ease;
+        }
+
+        .seccion-detalle.activo{display:block;}
+
+        .btn-volver{
+            display:inline-block;
+            margin-bottom:20px;
+            color:var(--rojo);
+            font-size:13px;
+            font-weight:700;
+            cursor:pointer;
+        }
+
+        .certificado-box{
+            background:#fff;
+            border:1px solid var(--borde);
+            border-radius:18px;
+            padding:35px;
+            max-width:700px;
+        }
+
+        .certificado-box h3{
+            color:var(--rojo);
+            margin-bottom:10px;
+        }
+
+        .certificado-box p{
+            margin-bottom:20px;
+            color:#64748B;
+        }
+
+        .input-certificado{
+            width:100%;
+            padding:15px;
+            border-radius:10px;
+            border:1px solid #CBD5E1;
+            margin-bottom:20px;
+            font-size:1rem;
+        }
+
+        .btn-certificado{
+            background:var(--rojo);
+            color:#fff;
+            border:none;
+            padding:15px 25px;
+            border-radius:10px;
+            font-weight:700;
+            cursor:pointer;
+            transition:.3s ease;
+        }
+
+        .btn-certificado:hover{background:var(--rojo-hover);}
+
+        .certificado-generado{
+            margin-top:25px;
+            background:#fff;
+            border:1px solid var(--borde);
+            border-radius:16px;
+            padding:25px;
+        }
+
+        .sub-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+            gap:15px;
+            margin-bottom:25px;
+        }
+
+        .sub-card{
+            background:#fff;
+            border:1px solid var(--borde);
+            border-radius:16px;
+            padding:25px;
+            text-align:center;
+            cursor:pointer;
+            transition:.3s ease;
+        }
+
+        .sub-card:hover{
+            transform:translateY(-4px);
+            border-color:var(--rojo);
+            box-shadow:0 10px 20px rgba(0,0,0,.05);
+        }
+
+        .sub-card span{
+            font-size:2rem;
+            display:block;
+            margin-bottom:10px;
+        }
+
+        .sub-card-mini{
+            background:#fff;
+            border:1px solid var(--borde);
+            border-radius:14px;
+            padding:20px;
+            text-align:center;
+        }
+
+        .sub-card-mini span{
+            font-size:1.8rem;
+            display:block;
+            margin-bottom:10px;
+        }
+
+        .sub-seccion{display:none;}
+        .activo-sub{display:block;}
+
+        footer{
+            text-align:center;
+            padding:40px;
+            color:#94A3B8;
+            font-size:11px;
+        }
+
+        @keyframes fadeIn{
+            from{opacity:0;transform:translateY(10px);}
+            to{opacity:1;transform:translateY(0);}
+        }
+
+        /* ── PQR ESTILOS ── */
+        .pqr-wrapper{
+            max-width:780px;
+        }
+
+        .pqr-header-box{
+            background:linear-gradient(135deg,#D32F2F,#B71C1C);
+            border-radius:16px;
+            padding:30px 35px;
+            color:#fff;
+            margin-bottom:30px;
+        }
+
+        .pqr-header-box h2{
+            font-size:1.6rem;
+            margin-bottom:8px;
+        }
+
+        .pqr-header-box p{
+            opacity:.9;
+            font-size:.95rem;
+            line-height:1.6;
+        }
+
+        .pqr-num-caso{
+            display:inline-block;
+            background:rgba(255,255,255,.2);
+            border:1px solid rgba(255,255,255,.4);
+            border-radius:8px;
+            padding:6px 14px;
+            font-size:.85rem;
+            font-weight:700;
+            margin-top:12px;
+            letter-spacing:1px;
+        }
+
+        .pqr-form{
+            background:#fff;
+            border:1px solid var(--borde);
+            border-radius:18px;
+            padding:35px;
+        }
+
+        .pqr-form label{
+            display:block;
+            font-size:.85rem;
+            font-weight:700;
+            color:#475569;
+            margin-bottom:7px;
+            text-transform:uppercase;
+            letter-spacing:.5px;
+        }
+
+        .pqr-form input,
+        .pqr-form select{
+            width:100%;
+            padding:13px 15px;
+            border-radius:10px;
+            border:1.5px solid #CBD5E1;
+            font-size:.95rem;
+            font-family:'Inter',sans-serif;
+            color:var(--texto);
+            margin-bottom:20px;
+            background:#fff;
+            transition:border-color .2s;
+        }
+
+        .pqr-form input:focus,
+        .pqr-form select:focus,
+        .pqr-textarea:focus{
+            outline:none;
+            border-color:var(--rojo);
+        }
+
+        .pqr-textarea{
+            width:100%;
+            padding:15px;
+            border-radius:10px;
+            border:1.5px solid #CBD5E1;
+            font-size:.95rem;
+            font-family:'Inter',sans-serif;
+            color:var(--texto);
+            margin-bottom:20px;
+            resize:vertical;
+            min-height:220px;
+            line-height:1.7;
+            background:#fff;
+            transition:border-color .2s;
+        }
+
+        .pqr-row{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:16px;
+        }
+
+        .pqr-anonimo{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            margin-bottom:24px;
+            background:#F8FAFC;
+            border:1px solid var(--borde);
+            border-radius:10px;
+            padding:14px 18px;
+            cursor:pointer;
+        }
+
+        .pqr-anonimo input[type=checkbox]{
+            width:18px;
+            height:18px;
+            accent-color:var(--rojo);
+            cursor:pointer;
+        }
+
+        .pqr-anonimo span{
+            font-size:.9rem;
+            color:#475569;
+        }
+
+        .pqr-anonimo strong{
+            color:var(--texto);
+        }
+
+        .btn-pqr-enviar{
+            width:100%;
+            background:var(--rojo);
+            color:#fff;
+            border:none;
+            padding:17px;
+            border-radius:12px;
+            font-size:1rem;
+            font-weight:700;
+            cursor:pointer;
+            transition:.3s ease;
+            letter-spacing:.5px;
+        }
+
+        .btn-pqr-enviar:hover{
+            background:var(--rojo-hover);
+            transform:translateY(-2px);
+            box-shadow:0 8px 20px rgba(211,47,47,.3);
+        }
+
+        .btn-pqr-enviar:disabled{
+            background:#94A3B8;
+            cursor:not-allowed;
+            transform:none;
+            box-shadow:none;
+        }
+
+        .pqr-exito{
+            display:none;
+            background:linear-gradient(135deg,#f0fdf4,#dcfce7);
+            border:2px solid #86efac;
+            border-radius:16px;
+            padding:35px;
+            text-align:center;
+            margin-top:20px;
+        }
+
+        .pqr-exito.mostrar{display:block;animation:fadeIn .5s ease;}
+
+        .pqr-exito h3{
+            color:#15803d;
+            font-size:1.4rem;
+            margin-bottom:10px;
+        }
+
+        .pqr-exito p{
+            color:#166534;
+            font-size:.95rem;
+            line-height:1.7;
+        }
+
+        .pqr-exito .caso-numero{
+            display:inline-block;
+            background:#15803d;
+            color:#fff;
+            border-radius:8px;
+            padding:8px 20px;
+            font-weight:700;
+            font-size:1.1rem;
+            margin:15px 0;
+            letter-spacing:1px;
+        }
+
+        .contador-chars{
+            font-size:.8rem;
+            color:#94A3B8;
+            text-align:right;
+            margin-top:-15px;
+            margin-bottom:20px;
+        }
+
+        .tipo-badge{
+            display:inline-block;
+            padding:3px 10px;
+            border-radius:20px;
+            font-size:.75rem;
+            font-weight:700;
+            margin-left:8px;
+        }
+
+        .tipo-queja{background:#fee2e2;color:#991b1b;}
+        .tipo-sugerencia{background:#dbeafe;color:#1e40af;}
+        .tipo-reclamo{background:#fef3c7;color:#92400e;}
+        .tipo-felicitacion{background:#d1fae5;color:#065f46;}
+
+        .privacidad-nota{
+            background:#fffbeb;
+            border:1px solid #fde68a;
+            border-radius:10px;
+            padding:14px 18px;
+            font-size:.82rem;
+            color:#92400e;
+            line-height:1.6;
+            margin-bottom:20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+    <img
+        src="https://drive.google.com/thumbnail?id=1w0uRY9Xc1XBG989j0dwKyTH2iDcJc8ok&sz=w1000"
+        alt="Arkos Logo"
+        class="logo-img"
+    >
+    <div class="sub-header">INTRANET CORPORATIVA</div>
+</header>
+
+<div class="container">
+
+    <div class="barra-superior">
+        <div class="marquee">
+            <span>
+                📢 ARKOS SISTEMAS & ARQUITECTURA — Amantes de la arquitectura • Innovación • Tecnología • Automatización • Desarrollo • Transformación digital • 📢
+            </span>
+        </div>
+    </div>
+
+    <div class="grid-dashboard" id="menuPrincipal">
+
+        <div class="modulo-card" onclick="mostrarSeccion('th')">
+            <span class="icon-box">👩‍💼</span>
+            <h2>Talento Humano</h2>
+            <span class="btn-ingresar">INGRESAR</span>
+        </div>
+
+        <div class="modulo-card" onclick="mostrarSeccion('sistemas')">
+            <span class="icon-box">💻</span>
+            <h2>Sistemas</h2>
+            <span class="btn-ingresar">INGRESAR</span>
+        </div>
+
+        <div class="modulo-card">
+            <span class="icon-box">📋</span>
+            <h2>Calidad</h2>
+            <span class="btn-ingresar">INGRESAR</span>
+        </div>
+
+        <div class="modulo-card">
+            <span class="icon-box">📈</span>
+            <h2>Comercial</h2>
+            <span class="btn-ingresar">INGRESAR</span>
+        </div>
+
+        <div class="modulo-card">
+            <span class="icon-box">⛑️</span>
+            <h2>SST</h2>
+            <span class="btn-ingresar">INGRESAR</span>
+        </div>
+
+        <div class="modulo-card">
+            <span class="icon-box">📰</span>
+            <h2>Noticias</h2>
+            <span class="btn-ingresar">INGRESAR</span>
+        </div>
+
+        <div class="modulo-card">
+            <span class="icon-box">💰</span>
+            <h2>Nómina</h2>
+            <span class="btn-ingresar">INGRESAR</span>
+        </div>
+
+        <div class="modulo-card">
+            <span class="icon-box">🎓</span>
+            <h2>Capacitaciones</h2>
+            <span class="btn-ingresar">INGRESAR</span>
+        </div>
+
+        <!-- NUEVO: PQR -->
+        <div class="modulo-card pqr-card" onclick="mostrarSeccion('pqr')">
+            <span class="icon-box">📣</span>
+            <h2>PQR</h2>
+            <span class="btn-ingresar">INGRESAR</span>
+        </div>
+
+    </div>
+
+    <div id="vistaInicio">
+
+    <div class="bienvenida">
+        <h1>Bienvenido(a) a la Intranet Arkos</h1>
+        <p>Plataforma corporativa para automatización de procesos internos.</p>
+    </div>
+
+    <div class="accesos-rapidos">
+        <div class="acceso-card"><span>📅</span><p>Calendario</p></div>
+        <div class="acceso-card"><span>🎂</span><p>Cumpleaños</p></div>
+        <div class="acceso-card"><span>📞</span><p>Directorio</p></div>
+        <div class="acceso-card"><span>💼</span><p>Vacantes</p></div>
+    </div>
+
+    <div class="acceso-card" style="grid-column: span 4; padding:15px;">
+        <h3 style="margin-bottom:15px; color:#D32F2F;">📅 Calendario Corporativo</h3>
+        <iframe
+            src="https://calendar.google.com/calendar/embed?src=es.colombian%23holiday%40group.v.calendar.google.com&ctz=America%2FBogota"
+            style="border:0"
+            width="100%"
+            height="500"
+            frameborder="0"
+            scrolling="no">
+        </iframe>
+    </div>
+
+    </div><!-- fin #vistaInicio -->
+
+    <!-- TALENTO HUMANO -->
+    <div id="th" class="seccion-detalle">
+
+        <span class="btn-volver" onclick="volverAlMenu()">← VOLVER AL MENÚ PRINCIPAL</span>
+        <h2 style="color:#D32F2F;">Gestión Talento Humano</h2>
+        <br>
+
+        <div id="menuTH" class="sub-seccion activo-sub">
+            <div class="sub-grid">
+                <div class="sub-card" onclick="abrirCertificaciones()">
+                    <span>📄</span><h3>Certificaciones</h3>
+                </div>
+                <div class="sub-card" onclick="mostrarSubModulo('vacaciones')">
+                    <span>🏖️</span><h3>Vacaciones</h3>
+                </div>
+                <div class="sub-card" onclick="mostrarSubModulo('incapacidades')">
+                    <span>🩺</span><h3>Incapacidades</h3>
+                </div>
+                <div class="sub-card" onclick="mostrarSubModulo('evaluaciones')">
+                    <span>📚</span><h3>Evaluaciones Formación</h3>
+                </div>
+            </div>
+        </div>
+
+        <div id="certificaciones" class="sub-seccion">
+            <span class="btn-volver" onclick="volverMenuTH()">← VOLVER</span>
+            <div class="sub-grid">
+                <div class="sub-card" onclick="abrirCertificadoLaboral()">
+                    <span>📄</span><h3>Certificado Laboral</h3>
+                </div>
+            </div>
+        </div>
+
+        <div id="certificadoLaboral" class="sub-seccion">
+            <span class="btn-volver" onclick="volverCertificaciones()">← VOLVER A CERTIFICACIONES</span>
+            <div class="certificado-box">
+                <h3>Generar certificado laboral</h3>
+                <p>Digita tu número de cédula para descargar automáticamente el certificado laboral en PDF.</p>
+                <input type="text" id="cedulaEmpleado" placeholder="Ingresa tu número de cédula" class="input-certificado">
+                <button onclick="generarCertificado()" class="btn-certificado">GENERAR CERTIFICADO</button>
+            </div>
+            <div id="resultadoCertificado"></div>
+        </div>
+
+        <div id="vacaciones" class="sub-seccion">
+            <span class="btn-volver" onclick="volverMenuTH()">← VOLVER</span>
+            <div class="certificado-box">
+                <h3>Solicitud de Vacaciones</h3>
+                <p>Aquí podrás gestionar solicitudes de vacaciones.</p>
+            </div>
+        </div>
+
+        <div id="incapacidades" class="sub-seccion">
+            <span class="btn-volver" onclick="volverMenuTH()">← VOLVER</span>
+            <div class="certificado-box">
+                <h3>Gestión de Incapacidades</h3>
+                <p>Aquí podrás gestionar incapacidades médicas.</p>
+            </div>
+        </div>
+
+        <div id="evaluaciones" class="sub-seccion">
+            <span class="btn-volver" onclick="volverMenuTH()">← VOLVER</span>
+            <div class="sub-grid">
+                <div class="sub-card-mini"><span>🧑‍💼</span><p>Ingreso</p></div>
+                <div class="sub-card-mini"><span>📋</span><p>Periodo de Prueba</p></div>
+                <div class="sub-card-mini"><span>📈</span><p>Cambio de Cargo</p></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SISTEMAS -->
+    <div id="sistemas" class="seccion-detalle">
+        <span class="btn-volver" onclick="volverAlMenu()">← VOLVER AL MENÚ PRINCIPAL</span>
+        <h2 style="color:#D32F2F;">Sistemas</h2>
+        <br>
+        <div class="sub-grid">
+            <div
+                class="sub-card"
+                onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfjgnNv5UGMXi_UX4AR82aCsN3GbZSqWjujeBtHRamFouepAw/viewform','_blank')"
+            >
+                <span>🛠️</span><h3>Solicitar Soporte TI</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- PQR -->
+    <div id="pqr" class="seccion-detalle">
+
+        <span class="btn-volver" onclick="volverAlMenu()">← VOLVER AL MENÚ PRINCIPAL</span>
+
+        <div class="pqr-wrapper">
+
+            <div class="pqr-header-box">
+                <h2>📣 Canal PQR — Tu voz importa</h2>
+                <p>
+                    Este es tu espacio seguro para expresar peticiones, quejas, reclamos o sugerencias
+                    sobre el ambiente laboral, el estado de las instalaciones o cualquier situación
+                    que consideres importante. Tu reporte genera un número de caso y llega directamente
+                    a Talento Humano.
+                </p>
+                <span class="pqr-num-caso" id="pqrNumeroCaso">Caso #—</span>
+            </div>
+
+            <div class="pqr-form" id="pqrFormContainer">
+
+                <div class="privacidad-nota">
+                    🔒 <strong>Confidencialidad:</strong> Puedes enviar este reporte de forma anónima.
+                    Si decides identificarte, tu información será tratada con total reserva por el área de Talento Humano
+                    conforme a la política de protección de datos de ARKOS.
+                </div>
+
+                <div class="pqr-row">
+                    <div>
+                        <label for="pqrTipo">Tipo de reporte *</label>
+                        <select id="pqrTipo" required>
+                            <option value="">Selecciona una opción...</option>
+                            <option value="Queja">😤 Queja</option>
+                            <option value="Reclamo">⚠️ Reclamo</option>
+                            <option value="Sugerencia">💡 Sugerencia</option>
+                            <option value="Felicitación">🌟 Felicitación</option>
+                            <option value="Petición">📋 Petición</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="pqrArea">Área relacionada *</label>
+                        <select id="pqrArea" required>
+                            <option value="">Selecciona un área...</option>
+                            <option value="Ambiente laboral">🤝 Ambiente laboral</option>
+                            <option value="Instalaciones y espacio de trabajo">🏢 Instalaciones y espacio de trabajo</option>
+                            <option value="Talento Humano">👩‍💼 Talento Humano</option>
+                            <option value="Sistemas">💻 Sistemas</option>
+                            <option value="Comercial">📈 Comercial</option>
+                            <option value="SST">⛑️ SST</option>
+                            <option value="Liderazgo y gestión">👔 Liderazgo y gestión</option>
+                            <option value="Nómina y beneficios">💰 Nómina y beneficios</option>
+                            <option value="Otro">📌 Otro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label for="pqrAsunto">Asunto (título breve) *</label>
+                <input
+                    type="text"
+                    id="pqrAsunto"
+                    placeholder="Ej: Problema con la calefacción del piso 2, Situación con mi equipo de trabajo..."
+                    maxlength="150"
+                >
+
+                <label for="pqrDescripcion">Descripción detallada *</label>
+                <textarea
+                    id="pqrDescripcion"
+                    class="pqr-textarea"
+                    placeholder="Cuéntanos con detalle lo que estás viviendo o lo que quieres reportar. Entre más información nos des, mejor podremos ayudarte. No hay límite de palabras — escribe todo lo que necesites expresar.
+
+Puedes incluir:
+• ¿Qué está pasando?
+• ¿Desde cuándo?
+• ¿Cómo te ha afectado?
+• ¿Qué resultado esperas?"
+                    oninput="contarChars(this)"
+                ></textarea>
+                <div class="contador-chars" id="contadorChars">0 caracteres</div>
+
+                <label for="pqrFecha">¿Cuándo ocurrió? (opcional)</label>
+                <input type="date" id="pqrFecha">
+
+                <div class="pqr-anonimo" onclick="toggleAnonimo()">
+                    <input type="checkbox" id="pqrAnonimo">
+                    <span>
+                        <strong>Enviar de forma anónima</strong> —
+                        No se incluirá tu nombre ni correo en el reporte enviado a Talento Humano.
+                    </span>
+                </div>
+
+                <div id="pqrDatosPersonales">
+                    <div class="pqr-row">
+                        <div>
+                            <label for="pqrNombre">Tu nombre (opcional)</label>
+                            <input type="text" id="pqrNombre" placeholder="Nombre completo">
+                        </div>
+                        <div>
+                            <label for="pqrCorreo">Tu correo (opcional)</label>
+                            <input type="email" id="pqrCorreo" placeholder="correo@arkos.com.co">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-pqr-enviar" id="btnEnviarPQR" onclick="enviarPQR()">
+                    📤 ENVIAR REPORTE PQR
+                </button>
+
+            </div>
+
+            <div class="pqr-exito" id="pqrExito">
+                <div style="font-size:3rem;margin-bottom:10px;">✅</div>
+                <h3>¡Tu reporte fue enviado exitosamente!</h3>
+                <div class="caso-numero" id="pqrCasoConfirmado"></div>
+                <p>
+                    Tu reporte ha sido enviado a <strong>talentohumano@arkos.com.co</strong>.<br>
+                    El área de Talento Humano revisará tu caso y tomará las acciones correspondientes.<br><br>
+                    Guarda tu número de caso para hacer seguimiento si lo necesitas.
+                </p>
+                <br>
+                <button
+                    onclick="nuevoPQR()"
+                    style="background:var(--rojo);color:#fff;border:none;padding:12px 25px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem;"
+                >
+                    Enviar otro reporte
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<footer>ARKOS © 2026 | Automatización RRHH</footer>
+
+<script>
+
+    /* ── GENERADOR DE NÚMERO DE CASO ── */
+    function generarNumeroCaso() {
+        const ahora = new Date();
+        const año   = ahora.getFullYear();
+        const mes   = String(ahora.getMonth() + 1).padStart(2, '0');
+        const dia   = String(ahora.getDate()).padStart(2, '0');
+        const rand  = Math.floor(1000 + Math.random() * 9000);
+        return `PQR-${año}${mes}${dia}-${rand}`;
+    }
+
+    /* ── ASIGNAR NÚMERO AL CARGAR LA SECCIÓN ── */
+    let numeroCasoActual = '';
+
+    function mostrarSeccion(id) {
+        document.getElementById('menuPrincipal').style.display = 'none';
+        document.getElementById('vistaInicio').style.display   = 'none';
+        document.querySelectorAll('.seccion-detalle').forEach(sec => sec.classList.remove('activo'));
+        document.getElementById(id).classList.add('activo');
+
+        if (id === 'pqr') {
+            numeroCasoActual = generarNumeroCaso();
+            document.getElementById('pqrNumeroCaso').textContent = 'Caso #' + numeroCasoActual;
+            document.getElementById('pqrExito').classList.remove('mostrar');
+            document.getElementById('pqrFormContainer').style.display = 'block';
+        }
+    }
+
+    function volverAlMenu() {
+        document.getElementById('menuPrincipal').style.display = 'grid';
+        document.getElementById('vistaInicio').style.display   = 'block';
+        document.querySelectorAll('.seccion-detalle').forEach(sec => sec.classList.remove('activo'));
+    }
+
+    function ocultarSubModulos() {
+        document.querySelectorAll('.sub-seccion').forEach(sec => sec.classList.remove('activo-sub'));
+    }
+
+    function abrirCertificaciones() {
+        ocultarSubModulos();
+        document.getElementById('certificaciones').classList.add('activo-sub');
+    }
+
+    function abrirCertificadoLaboral() {
+        ocultarSubModulos();
+        document.getElementById('certificadoLaboral').classList.add('activo-sub');
+    }
+
+    function volverCertificaciones() {
+        ocultarSubModulos();
+        document.getElementById('certificaciones').classList.add('activo-sub');
+    }
+
+    function volverMenuTH() {
+        ocultarSubModulos();
+        document.getElementById('menuTH').classList.add('activo-sub');
+    }
+
+    function mostrarSubModulo(id) {
+        ocultarSubModulos();
+        document.getElementById(id).classList.add('activo-sub');
+    }
+
+    /* ── CERTIFICADO LABORAL ── */
+    async function generarCertificado() {
+        const cedula    = document.getElementById('cedulaEmpleado').value;
+        const resultado = document.getElementById('resultadoCertificado');
+
+        if (!cedula) {
+            resultado.innerHTML = `<div class="certificado-generado">Debes ingresar una cédula.</div>`;
+            return;
+        }
+
+        resultado.innerHTML = `<div class="certificado-generado">⏳ Generando certificado laboral...</div>`;
+
+        try {
+            const url      = `https://script.google.com/macros/s/AKfycbw7FeWzity1bTGsgYfe2B7P3992z_hnoOpGTaTmcXBaGg6YhLp-vqkk4UBt1flb8MvpUw/exec?cedula=${cedula}`;
+            const response = await fetch(url);
+            const data     = await response.json();
+
+            if (!data.success) {
+                resultado.innerHTML = `<div class="certificado-generado">❌ No se encontró información para esta cédula.</div>`;
+                return;
+            }
+
+            const link      = document.createElement('a');
+            link.href       = `data:application/pdf;base64,${data.pdf}`;
+            link.download   = `Certificado_${cedula}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            resultado.innerHTML = `<div class="certificado-generado">✅ Certificado generado correctamente.</div>`;
+
+        } catch (error) {
+            console.error(error);
+            resultado.innerHTML = `<div class="certificado-generado">❌ Error generando el certificado.</div>`;
+        }
+    }
+
+    /* ── PQR: CONTADOR DE CARACTERES ── */
+    function contarChars(el) {
+        const n = el.value.length;
+        document.getElementById('contadorChars').textContent = n + ' caracter' + (n === 1 ? '' : 'es');
+    }
+
+    /* ── PQR: TOGGLE ANÓNIMO ── */
+    function toggleAnonimo() {
+        const cb      = document.getElementById('pqrAnonimo');
+        cb.checked    = !cb.checked;
+        const datos   = document.getElementById('pqrDatosPersonales');
+        datos.style.display = cb.checked ? 'none' : 'block';
+    }
+
+    /* ── PQR: ENVIAR ── */
+    function enviarPQR() {
+        const tipo        = document.getElementById('pqrTipo').value;
+        const area        = document.getElementById('pqrArea').value;
+        const asunto      = document.getElementById('pqrAsunto').value.trim();
+        const descripcion = document.getElementById('pqrDescripcion').value.trim();
+        const fecha       = document.getElementById('pqrFecha').value;
+        const anonimo     = document.getElementById('pqrAnonimo').checked;
+        const nombre      = document.getElementById('pqrNombre').value.trim();
+        const correo      = document.getElementById('pqrCorreo').value.trim();
+
+        if (!tipo || !area || !asunto || !descripcion) {
+            alert('Por favor completa los campos obligatorios: Tipo, Área, Asunto y Descripción.');
+            return;
+        }
+
+        const btn = document.getElementById('btnEnviarPQR');
+        btn.disabled     = true;
+        btn.textContent  = '⏳ Enviando...';
+
+        /* Construir cuerpo del correo */
+        const ahora      = new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' });
+        const remitente  = anonimo ? 'ANÓNIMO' : (nombre || 'No especificado');
+        const correoRem  = anonimo ? 'Anónimo' : (correo || 'No especificado');
+        const fechaEvento = fecha ? new Date(fecha + 'T12:00:00').toLocaleDateString('es-CO') : 'No especificada';
+
+        const cuerpo =
+            `NUEVO REPORTE PQR — INTRANET ARKOS\n` +
+            `═══════════════════════════════════════\n\n` +
+            `Número de caso : ${numeroCasoActual}\n` +
+            `Fecha y hora   : ${ahora}\n` +
+            `Tipo           : ${tipo}\n` +
+            `Área           : ${area}\n` +
+            `Asunto         : ${asunto}\n` +
+            `Fecha del hecho: ${fechaEvento}\n\n` +
+            `REMITENTE\n` +
+            `─────────\n` +
+            `Nombre : ${remitente}\n` +
+            `Correo : ${correoRem}\n\n` +
+            `DESCRIPCIÓN DETALLADA\n` +
+            `─────────────────────\n` +
+            `${descripcion}\n\n` +
+            `═══════════════════════════════════════\n` +
+            `Este reporte fue generado automáticamente desde la Intranet ARKOS.\n` +
+            `Por favor gestionar dentro de los plazos establecidos en la política de PQR.`;
+
+        const subject = encodeURIComponent(`[${tipo}] ${asunto} — ${numeroCasoActual}`);
+        const body    = encodeURIComponent(cuerpo);
+
+        /* Abrir cliente de correo */
+      /* Abrir cliente de correo */
+const mailtoLink = `mailto:talentohumano@arkos.com.co?subject=${subject}&body=${body}`;
+window.open(mailtoLink, '_self');
+
+/* Mostrar confirmación */
+document.getElementById('pqrFormContainer').style.display = 'none';
+const exitoEl = document.getElementById('pqrExito');
+document.getElementById('pqrCasoConfirmado').textContent = numeroCasoActual;
+exitoEl.classList.add('mostrar');
+
+btn.disabled = false;
+btn.textContent = '📤 ENVIAR REPORTE PQR';
+    }
+
+    /* ── PQR: NUEVO REPORTE ── */
+    function nuevoPQR() {
+        /* Limpiar formulario */
+        document.getElementById('pqrTipo').value        = '';
+        document.getElementById('pqrArea').value        = '';
+        document.getElementById('pqrAsunto').value      = '';
+        document.getElementById('pqrDescripcion').value = '';
+        document.getElementById('pqrFecha').value       = '';
+        document.getElementById('pqrNombre').value      = '';
+        document.getElementById('pqrCorreo').value      = '';
+        document.getElementById('pqrAnonimo').checked   = false;
+        document.getElementById('pqrDatosPersonales').style.display = 'block';
+        document.getElementById('contadorChars').textContent = '0 caracteres';
+
+        /* Generar nuevo número de caso */
+        numeroCasoActual = generarNumeroCaso();
+        document.getElementById('pqrNumeroCaso').textContent = 'Caso #' + numeroCasoActual;
+
+        document.getElementById('pqrExito').classList.remove('mostrar');
+        document.getElementById('pqrFormContainer').style.display = 'block';
+    }
+
+</script>
+
+</body>
+</html>
