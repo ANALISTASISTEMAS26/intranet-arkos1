@@ -991,88 +991,69 @@ Puedes incluir:
     }
 
     /* ── PQR: ENVIAR ── */
-async function enviarPQR() {
+    function enviarPQR() {
+        const tipo        = document.getElementById('pqrTipo').value;
+        const area        = document.getElementById('pqrArea').value;
+        const asunto      = document.getElementById('pqrAsunto').value.trim();
+        const descripcion = document.getElementById('pqrDescripcion').value.trim();
+        const fecha       = document.getElementById('pqrFecha').value;
+        const anonimo     = document.getElementById('pqrAnonimo').checked;
+        const nombre      = document.getElementById('pqrNombre').value.trim();
+        const correo      = document.getElementById('pqrCorreo').value.trim();
 
-    const btn = document.getElementById('btnEnviarPQR');
-
-    const tipo        = document.getElementById('pqrTipo').value;
-    const area        = document.getElementById('pqrArea').value;
-    const asunto      = document.getElementById('pqrAsunto').value.trim();
-    const descripcion = document.getElementById('pqrDescripcion').value.trim();
-    const fecha       = document.getElementById('pqrFecha').value;
-    const anonimo     = document.getElementById('pqrAnonimo').checked;
-
-    const nombre = anonimo
-        ? 'ANÓNIMO'
-        : document.getElementById('pqrNombre').value.trim();
-
-    const correo = anonimo
-        ? 'NO REGISTRADO'
-        : document.getElementById('pqrCorreo').value.trim();
-
-    if (!tipo || !area || !asunto || !descripcion) {
-        alert('Completa los campos obligatorios.');
-        return;
-    }
-
-    btn.disabled = true;
-    btn.innerHTML = '⏳ ENVIANDO...';
-
-    const payload = {
-        numeroCaso : numeroCasoActual,
-        tipo,
-        area,
-        asunto,
-        descripcion,
-        fecha,
-        anonimo,
-        nombre,
-        correo
-    };
-
-    try {
-
-        const response = await fetch(
-            'https://script.google.com/macros/s/AKfycbyldkbRGtV-fasNnE7CdBBQGm604v0W0yYJUtiedVt0-3k36XQhiO6Nnb9MfvZwyFfy/exec',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            }
-        );
-
-        const data = await response.json();
-
-        if (data.success) {
-
-            document.getElementById('pqrFormContainer').style.display = 'none';
-
-            document
-                .getElementById('pqrExito')
-                .classList.add('mostrar');
-
-            document.getElementById('pqrCasoConfirmado').textContent =
-                numeroCasoActual;
-
-        } else {
-
-            alert('Error: ' + data.error);
-
+        if (!tipo || !area || !asunto || !descripcion) {
+            alert('Por favor completa los campos obligatorios: Tipo, Área, Asunto y Descripción.');
+            return;
         }
 
-    } catch (error) {
+        const btn = document.getElementById('btnEnviarPQR');
+        btn.disabled     = true;
+        btn.textContent  = '⏳ Enviando...';
 
-        console.error(error);
-        alert('Error enviando PQR');
+        /* Construir cuerpo del correo */
+        const ahora      = new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' });
+        const remitente  = anonimo ? 'ANÓNIMO' : (nombre || 'No especificado');
+        const correoRem  = anonimo ? 'Anónimo' : (correo || 'No especificado');
+        const fechaEvento = fecha ? new Date(fecha + 'T12:00:00').toLocaleDateString('es-CO') : 'No especificada';
 
+        const cuerpo =
+            `NUEVO REPORTE PQR — INTRANET ARKOS\n` +
+            `═══════════════════════════════════════\n\n` +
+            `Número de caso : ${numeroCasoActual}\n` +
+            `Fecha y hora   : ${ahora}\n` +
+            `Tipo           : ${tipo}\n` +
+            `Área           : ${area}\n` +
+            `Asunto         : ${asunto}\n` +
+            `Fecha del hecho: ${fechaEvento}\n\n` +
+            `REMITENTE\n` +
+            `─────────\n` +
+            `Nombre : ${remitente}\n` +
+            `Correo : ${correoRem}\n\n` +
+            `DESCRIPCIÓN DETALLADA\n` +
+            `─────────────────────\n` +
+            `${descripcion}\n\n` +
+            `═══════════════════════════════════════\n` +
+            `Este reporte fue generado automáticamente desde la Intranet ARKOS.\n` +
+            `Por favor gestionar dentro de los plazos establecidos en la política de PQR.`;
+
+        const subject = encodeURIComponent(`[${tipo}] ${asunto} — ${numeroCasoActual}`);
+        const body    = encodeURIComponent(cuerpo);
+
+        /* Abrir cliente de correo */
+      /* Abrir cliente de correo */
+const mailtoLink = `mailto:talentohumano@arkos.com.co?subject=${subject}&body=${body}`;
+window.open(mailtoLink, '_self');
+
+/* Mostrar confirmación */
+document.getElementById('pqrFormContainer').style.display = 'none';
+const exitoEl = document.getElementById('pqrExito');
+document.getElementById('pqrCasoConfirmado').textContent = numeroCasoActual;
+exitoEl.classList.add('mostrar');
+
+btn.disabled = false;
+btn.textContent = '📤 ENVIAR REPORTE PQR';
     }
 
-    btn.disabled = false;
-    btn.innerHTML = '📤 ENVIAR REPORTE PQR';
-}
-}
     /* ── PQR: NUEVO REPORTE ── */
     function nuevoPQR() {
         /* Limpiar formulario */
