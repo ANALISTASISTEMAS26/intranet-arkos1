@@ -991,7 +991,7 @@ Puedes incluir:
     }
 
     /* ── PQR: ENVIAR ── */
- async function enviarPQR() {
+async function enviarPQR() {
 
     const btn = document.getElementById('btnEnviarPQR');
 
@@ -1037,17 +1037,13 @@ Puedes incluir:
             {
                 method: 'POST',
                 headers: {
-   'Content-Type': 'application/json'
-},
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(payload)
             }
         );
 
-        const text = await response.text();
-
-        console.log(text);
-
-        const data = JSON.parse(text);
+        const data = await response.json();
 
         if (data.success) {
 
@@ -1069,13 +1065,13 @@ Puedes incluir:
     } catch (error) {
 
         console.error(error);
-
         alert('Error enviando PQR');
 
     }
 
     btn.disabled = false;
     btn.innerHTML = '📤 ENVIAR REPORTE PQR';
+}
 }
     /* ── PQR: NUEVO REPORTE ── */
     function nuevoPQR() {
